@@ -3,8 +3,6 @@
 #include "chess/board.h"
 
 namespace chess {
-BoardArray::BoardArray() { init(); }
-
 auto BoardArray::init() -> void {
   auto mdcells{std::experimental::mdspan{cells_.data(), 8, 8}};
   for (size_t r = 0; r < 8; ++r) {

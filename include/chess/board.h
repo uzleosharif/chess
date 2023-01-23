@@ -26,8 +26,6 @@ class BoardArray final : public Board {
   using piece_t = std::pair<PieceKind, PieceColor>;
 
  public:
-  BoardArray();
-
   auto init() -> void override;
 
  private:
