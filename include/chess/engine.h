@@ -2,42 +2,37 @@
 
 #pragma once
 
-#include <vector>
-
 namespace chess {
 
-enum class Piece { KING, ROOK, BISHOP, QUEEN, KNIGHT, PAWN };
-
-// this keeps track of all the pieces during the game
-class LivePieces {};
-
-// uses std::vector to hold pieces
-class VecLivePieces : public LivePieces {
- private:
-  std::vector<Piece> white_pieces_{};
-  std::vector<Piece> black_pieces_{};
-};
+///////////////////////////////////////////////////////////
+// Developer Notes:
+// Engine:
+// Responsibility: implement the logic of chess game
+//
+// Requirements
+// - when game starts, all pieces are initialized
+//
+// Stuff
+///////////////////////////////////////////////////////////
 
 // the universal interface for engine
-// we use live_pieces_t as template param to do a strategy pattern
-template <typename live_pieces_t>
+// the design uses a storage policy to keep track of live pieces.
+template <typename Board>
 class Engine {
-  //
+ public:
+  virtual ~Engine() = default;
+
+  // initializes the engine
+  virtual auto init() -> void = 0;
 };
 
 // our first naiive functional implementation of game
-template <typename live_pieces_t>
-class SimpleEngine : public Engine<live_pieces_t> {
+template <typename Board>
+class SimpleEngine final : public Engine<Board> {
+ public:
+  auto init() -> void override { board_.init(); }
+
  private:
-  live_pieces_t live_pieces_{};
+  Board board_{};
 };
 }  // namespace chess
-
-// Responsibility: implement the logic of chess game
-
-// Design Patterns to consider:
-// - Command Pattern
-
-// Requirements
-
-// Stuff
